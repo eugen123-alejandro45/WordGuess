@@ -8,6 +8,7 @@ public class Main {
             System.out.println("Enter word or letter");
             String s = Input.readString();
             magic.shoot(s);
+
         }
 
     }

@@ -25,6 +25,14 @@ public class MagicWord {
         return s;
     }
 
+    public boolean wins() {
+        for (int i = 0; i < correctLetters.length; i++) {
+            if (!correctLetters[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
     public  void shoot(String wordOrLetter) {
         if (wordOrLetter.length() == 1) {
             for (int i = 0; i < hiddenWord.length(); i++) {
