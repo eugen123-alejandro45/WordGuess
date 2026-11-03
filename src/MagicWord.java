@@ -4,7 +4,7 @@ public class MagicWord {
     private boolean[] correctLetters;
 
     public MagicWord () {
-        int alea = (int)(Math.random() + Words.length);
+        int alea = (int)(Math.random() * Words.length);
         hiddenWord = Words[alea];
         correctLetters = new boolean[hiddenWord.length()];
         for (int i = 0; i < correctLetters.length; i++) {
@@ -15,6 +15,29 @@ public class MagicWord {
     @Override
     public String toString() {
         String s = "";
+        for (int i = 0; i < correctLetters.length; i++) {
+            if (correctLetters[i]) {
+               s += hiddenWord.charAt(i);
+            } else {
+                s += "-";
+            }
+        }
+        return s;
+    }
 
+    public  void shoot(String wordOrLetter) {
+        if (wordOrLetter.length() == 1) {
+            for (int i = 0; i < hiddenWord.length(); i++) {
+                if (wordOrLetter.charAt(0) == hiddenWord.charAt(i)) {
+                    correctLetters[i] = true;
+                }
+            }
+        } else {
+            if (hiddenWord.equals(wordOrLetter)) {
+                for (int i = 0; i < correctLetters.length; i++) {
+                    correctLetters[i] = true;
+                }
+            }
+        }
     }
 }
