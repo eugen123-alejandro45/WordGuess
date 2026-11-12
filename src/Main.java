@@ -11,6 +11,7 @@ public class Main {
             if (magic.wins()) {
                 System.out.println(magic);
                 System.out.println("You WIN!!");
+                magic.reset();
             } else {
                 if (magic.looses()) {
                     System.out.println(magic);

@@ -1,5 +1,3 @@
-import java.util.Locale;
-
 public class MagicWord {
     private static final int MAX_FAILS = 10;
     private static final String[] Words = {"empanadas", "microondas", "ordenador", "ventana", "bogabante", "espagueti", "cebolla", "pimiento", "cucurella", "baitybait", "illojuan"};
@@ -17,17 +15,14 @@ public class MagicWord {
         }
     }
 
-    @Override
-    public String toString() {
-        String s = "";
+    public void reset() {
+        fails = 0;
+        int alea = (int)(Math.random() * Words.length);
+        hiddenWord = Words[alea];
+        correctLetters = new boolean[hiddenWord.length()];
         for (int i = 0; i < correctLetters.length; i++) {
-            if (correctLetters[i]) {
-               s += hiddenWord.charAt(i);
-            } else {
-                s += "-";
-            }
+            correctLetters[i] = false;
         }
-        return s;
     }
 
     public String getHiddenWord() {
@@ -46,21 +41,23 @@ public class MagicWord {
     public boolean looses() {
         return fails > MAX_FAILS;
     }
-    public  void shoot(String wordOrLetter) {
+    public void shoot(String wordOrLetter) {
         boolean acierto = false;
+        if (wordOrLetter == null || wordOrLetter.isEmpty()) {
+            return;
+        }
         if (wordOrLetter.length() == 1) { // It was a letter
             for (int i = 0; i < hiddenWord.length(); i++) {
                 if (wordOrLetter.toUpperCase().charAt(0) == hiddenWord.toUpperCase().charAt(i)) {
                     correctLetters[i] = true;
-                    acierto = true;
-                } else {
-                    fails++;
+
                 }
-            } if (!acierto) {
+            }
+            if (!acierto) {
                 fails++;
             }
         } else { // It was a word
-            if (hiddenWord.toLowerCase().equals(wordOrLetter.toUpperCase())) {
+            if (hiddenWord.toUpperCase().equals(wordOrLetter.toUpperCase())) {
                 for (int i = 0; i < correctLetters.length; i++) {
                     correctLetters[i] = true;
                 }
@@ -68,5 +65,18 @@ public class MagicWord {
                 fails = MAX_FAILS + 1;
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        String s = "";
+        for (int i = 0; i < correctLetters.length; i++) {
+            if (correctLetters[i]) {
+                s += hiddenWord.charAt(i);
+            } else {
+                s += "-";
+            }
+        }
+        return s;
     }
 }
